@@ -1,0 +1,45 @@
+# Build folders
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs
+*.log
+
+# SQL Server LocalDB
+*.mdf
+*.ldf
+
+# Angular
+node_modules/
+dist/
+.angular/
+
+# Environment files
+.env
+.env.*
+
+# VS Code
+.vscode/
+
+# Rider
+.idea/
+
+# OS files
+Thumbs.db
+Desktop.ini
+
+# Package folders
+packages/
+
+# Publish output
+publish/
+
+# Test Results
+TestResults/
