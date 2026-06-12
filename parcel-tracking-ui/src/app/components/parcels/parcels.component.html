@@ -1,0 +1,92 @@
+
+<h2>Parcel Tracking System</h2>
+
+<h3>Dashboard Summary</h3>
+
+<div>
+  <p>Total Parcels: {{ totalParcels }}</p>
+  <p>Pending: {{ pendingParcels }}</p>
+  <p>Collected: {{ collectedParcels }}</p>
+  <p>In Transit: {{ inTransitParcels }}</p>
+  <p>Delivered: {{ deliveredParcels }}</p>
+</div>
+
+<h3>Create Parcel</h3>
+
+<form (ngSubmit)="createParcel()">
+  <input name="senderName" [(ngModel)]="newParcel.senderName" placeholder="Sender Name" required>
+  <input name="receiverName" [(ngModel)]="newParcel.receiverName" placeholder="Receiver Name" required>
+  <input name="pickupAddress" [(ngModel)]="newParcel.pickupAddress" placeholder="Pickup Address" required>
+  <input name="deliveryAddress" [(ngModel)]="newParcel.deliveryAddress" placeholder="Delivery Address" required>
+  <input name="weight" type="number" [(ngModel)]="newParcel.weight" placeholder="Weight" required>
+
+  <button type="submit">Create Parcel</button>
+</form>
+
+
+<h3>Track Parcel</h3>
+
+<input
+  name="trackingNumberSearch"
+  [(ngModel)]="trackingNumberSearch"
+  placeholder="Enter tracking number"
+>
+
+<button type="button" (click)="searchByTrackingNumber()">Track</button>
+
+<div *ngIf="trackParcel">
+  <h4>Tracking Result</h4>
+  <p><strong>Tracking Number:</strong> {{ trackParcel.trackingNumber }}</p>
+  <p><strong>Sender:</strong> {{ trackParcel.senderName }}</p>
+  <p><strong>Receiver:</strong> {{ trackParcel.receiverName }}</p>
+  <p><strong>Status:</strong> {{ trackParcel.status }}</p>
+</div>
+
+<h3>All Parcels</h3>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>Tracking Number</th>
+      <th>Sender</th>
+      <th>Receiver</th>
+      <th>Pickup</th>
+      <th>Delivery</th>
+      <th>Weight</th>
+      <th>Status</th>
+       <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let parcel of parcels">
+      <td>{{ parcel.trackingNumber }}</td>
+      <td>{{ parcel.senderName }}</td>
+      <td>{{ parcel.receiverName }}</td>
+      <td>{{ parcel.pickupAddress }}</td>
+      <td>{{ parcel.deliveryAddress }}</td>
+      <td>{{ parcel.weight }}</td>
+      <td>{{ parcel.status }}</td>
+      <td>
+        <button
+  (click)="markCollected(parcel.id)"
+  [disabled]="parcel.status !== 'Pending'">
+  Collected
+</button>
+
+        <button
+          (click)="markInTransit(parcel.id)"
+          [disabled]="parcel.status !== 'Collected'">
+          In Transit
+        </button>
+
+        <button
+          (click)="markDelivered(parcel.id)"
+          [disabled]="parcel.status !== 'In Transit'">
+          Delivered
+        </button>
+        <button (click)="deleteParcel(parcel.id)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
